@@ -2,7 +2,6 @@ package game;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Random;
 
 public class GameActionListener implements ActionListener {
     private int row;
@@ -46,14 +45,12 @@ public class GameActionListener implements ActionListener {
 
     private void updateByAiData(GameBoard board){
         int x,y;
-        Random rnd = new Random();
-        do {
-            x = rnd.nextInt(GameBoard.dimension);
-            y = rnd.nextInt(GameBoard.dimension);
-        } while (!board.isTurnable(x,y));
+        Ai ai = new Ai(board);
+        x = ai.getAiTurnX();
+        y = ai.getAiTurnY();
 
         board.updateGameField(x,y);
-        int cellIndex = GameBoard.dimension * x + y;
+        int cellIndex = (board.getBoardDimension() * x) + y;
         board.getButton(cellIndex).setText(Character.toString(board.getGame().getCurrentPlayer().getPlayerSign()));
 
         if (board.checkWin()){

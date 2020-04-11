@@ -7,8 +7,8 @@ public class Game {
     private GamePlayer[] gamePlayers = new GamePlayer[2];
     private int playersTurn = 0;
 
-    public Game(){
-        this.board = new GameBoard(this);
+    public Game(int size){
+        this.board = new GameBoard(this, size);
     }
 
     public void initGame(){
@@ -20,9 +20,8 @@ public class Game {
         playersTurn = (playersTurn == 0) ? 1:0;
     }
 
-    GamePlayer getCurrentPlayer() {return gamePlayers[playersTurn]; }
-
-    void showMessage(String messageText){
+    public GamePlayer getCurrentPlayer() {return gamePlayers[playersTurn]; }
+    public void showMessage(String messageText){
         JOptionPane.showMessageDialog(board, messageText);
     }
 }

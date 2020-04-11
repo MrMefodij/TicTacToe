@@ -15,7 +15,8 @@ public class GameBoard extends JFrame {
 
     private Game game;
 
-    public GameBoard(Game currentGame){
+    public GameBoard(Game currentGame ,int _dimetion){
+        this.setDimension(_dimetion);
         this.game = currentGame;
         initField();
     }
@@ -57,16 +58,16 @@ public class GameBoard extends JFrame {
     }
 
     void emptyField(){
-        for (int i = 0; i<(dimension*dimension); i++){
+        for (int i = 0; i<(this.dimension*this.dimension); i++){
             gameButtons[i].setText("");
 
-            int x = i / GameBoard.dimension;
-            int y = i % GameBoard.dimension;
+            int x = i / this.dimension;
+            int y = i % this.dimension;
 
             gameField[x][y] = nullSymbol;
         }
     }
-    Game getGame () {return game;}
+    public Game getGame () {return game;}
 
     boolean isTurnable(int x, int y){
         boolean result = false;
@@ -93,10 +94,10 @@ public class GameBoard extends JFrame {
         boolean cols, rows, result;
         result = false;
 
-        for (int col =0; col < dimension; col++){
+        for (int col =0; col < this.dimension; col++){
             cols = true;
             rows = true;
-            for (int row = 0; row < dimension; row++){
+            for (int row = 0; row < this.dimension; row++){
                 cols &= (gameField[col][row] == playerSymbol);
                 rows &= (gameField[row][col] == playerSymbol);
             }
@@ -115,9 +116,9 @@ public class GameBoard extends JFrame {
         boolean result = false;
         boolean diag = true;
         boolean diag2 = true;
-        for (int row = 0; row<dimension;row++){
+        for (int row = 0; row<this.dimension;row++){
             diag &= (gameField[row][row] == playerSymbol);
-            diag2 &= (gameField[dimension - row - 1][row] == playerSymbol);
+            diag2 &= (gameField[this.dimension - row - 1][row] == playerSymbol);
         }
         if (diag || diag2){
             result = true;
@@ -127,9 +128,9 @@ public class GameBoard extends JFrame {
 
     boolean isFull(){
         boolean result = true;
-        for (int i = 0; i<(dimension*dimension); i++) {
-            int x = i / GameBoard.dimension;
-            int y = i % GameBoard.dimension;
+        for (int i = 0; i<(this.dimension*this.dimension); i++) {
+            int x = i / this.dimension;
+            int y = i % this.dimension;
             if (gameField[y][x] == nullSymbol) {
                 result = false;
                 break;
@@ -142,4 +143,15 @@ public class GameBoard extends JFrame {
         return gameButtons[buttonIndex];
     }
 
+    public void setDimension(int dimension) {
+        this.dimension = dimension;
+    }
+
+    public int getBoardDimension(){
+        return dimension;
+    }
+
+    public char[][] getGameField(){
+        return gameField;
+    }
 }
